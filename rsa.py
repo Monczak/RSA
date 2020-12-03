@@ -32,12 +32,12 @@ file = open(args.file[0], "rb")
 if mode == OperationMode.ENCRYPT:
     public_key, private_key = RSACore.generate_key_pair()
     Encryptor.write_key_files(args.file[0], public_key, private_key)
-    Encryptor.encrypt(private_key, file.read())
+    Encryptor.encrypt(public_key, file.read())
 else:
-    # Get the public key stored in the file "(file name with extension).pub"
-    public_key = FileParser.parse_key_file(f"{os.path.splitext(args.file[0])[0]}.pub", b"PUB0")
+    # Get the public key stored in the file "(file name with extension).prv"
+    private_key = FileParser.parse_key_file(f"{os.path.splitext(args.file[0])[0]}.prv", b"PRIV")
     encrypted_text = FileParser.parse_encrypted_file(args.file[0])
 
-    Decryptor.decrypt(public_key, encrypted_text)
+    Decryptor.decrypt(private_key, encrypted_text)
 
 print("Done.")

@@ -35,7 +35,7 @@ if mode == OperationMode.ENCRYPT:
     Encryptor.encrypt(public_key, file.read())
 else:
     # Get the public key stored in the file "(file name with extension).prv"
-    private_key = FileParser.parse_key_file(f"{os.path.splitext(args.file[0])[0]}.prv", b"PRIV")
+    private_key = FileParser.parse_key_file(f"{args.file[0]}.prv", b"PRIV")
     encrypted_text = FileParser.parse_encrypted_file(args.file[0])
 
     Decryptor.decrypt(private_key, encrypted_text)

@@ -11,7 +11,7 @@ class FileParser:
 
             encrypted_data = file.read()
             split_data = [encrypted_data[i * 8:i * 8 + 8] for i in range(0, orig_length)]
-            return split_data
+            return orig_length, split_data
 
     # Returns a tuple with the parsed key (n, d/e)
     @classmethod

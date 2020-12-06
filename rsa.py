@@ -47,11 +47,11 @@ else:
 
     print("Loading...")
     private_key = FileParser.parse_key_file(f"{orig_file_name}.prv", b"PRIV")
-    encrypted_text = FileParser.parse_encrypted_file(args.file[0])
+    orig_length, encrypted_text = FileParser.parse_encrypted_file(args.file[0])
 
     with open(f"{orig_file_name}.decrypted", "wb") as output_file:
         print("Decrypting...")
-        decrypted_text = Decryptor.decrypt(private_key, encrypted_text)
+        decrypted_text = Decryptor.decrypt(private_key, encrypted_text, orig_length)
         output_file.write(b"".join(decrypted_text))
 
 file.close()

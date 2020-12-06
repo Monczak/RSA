@@ -1,5 +1,6 @@
 class Encryptor:
-    block_size = 8
+    integer_size = 8
+    block_size = 4
 
     @classmethod
     def write_key_files(cls, name, public_key, private_key):
@@ -17,5 +18,9 @@ class Encryptor:
     def encrypt(cls, key, plaintext):
         e_key, n = key
 
-        cipher = [int.to_bytes(pow(char, e_key, n), cls.block_size, byteorder="little") for char in plaintext]
+        padding_start = (len(plaintext) // 4) * 4
+        padding_length = len(plaintext) % 4
+
+        cipher = [int.to_bytes(pow(int.from_bytes(plaintext[i * cls.block_size:i * cls.block_size + cls.block_size], byteorder="little"), e_key, n), cls.integer_size, byteorder="little") for i in range(len(plaintext) // cls.block_size)]
+        cipher.append(int.to_bytes(pow(int.from_bytes(plaintext[padding_start:padding_start + padding_length], byteorder="little"), e_key, n), cls.integer_size, byteorder="little"))
         return cipher

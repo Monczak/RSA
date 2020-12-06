@@ -1,10 +1,4 @@
-from math import ceil
-
-
 class FileParser:
-    def __init__(self):
-        pass
-
     # Returns a byte string with the encrypted data
     @classmethod
     def parse_encrypted_file(cls, file_path):
@@ -15,9 +9,9 @@ class FileParser:
 
             orig_length = int.from_bytes(file.read(4), byteorder="little")
 
-            encrypted_data = file.read(ceil(orig_length / 4) * 4)
-
-            return encrypted_data
+            encrypted_data = file.read()
+            split_data = [encrypted_data[i * 8:i * 8 + 8] for i in range(0, orig_length)]
+            return split_data
 
     # Returns a tuple with the parsed key (n, d/e)
     @classmethod

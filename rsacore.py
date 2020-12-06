@@ -48,7 +48,6 @@ class RSACore:
                 x = pow(x, 2, n)
                 if x == n - 1:
                     break
-
             else:
                 return False
         return True

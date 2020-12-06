@@ -1,7 +1,8 @@
 class Decryptor:
-    def __init__(self):
-        pass
-
     @classmethod
     def decrypt(cls, key, ciphertext):
-        pass
+        d_key, n = key
+
+        plaintext = [bytes(chr(pow(int.from_bytes(integer, byteorder="little"), d_key, n)), encoding="utf-8")
+                     for integer in ciphertext]
+        return plaintext

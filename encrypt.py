@@ -1,6 +1,5 @@
 class Encryptor:
-    def __init__(self):
-        pass
+    block_size = 8
 
     @classmethod
     def write_key_files(cls, name, public_key, private_key):
@@ -16,4 +15,7 @@ class Encryptor:
 
     @classmethod
     def encrypt(cls, key, plaintext):
-        pass
+        e_key, n = key
+
+        cipher = [int.to_bytes(pow(char, e_key, n), cls.block_size, byteorder="little") for char in plaintext]
+        return cipher

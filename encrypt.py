@@ -1,7 +1,7 @@
-class Encryptor:
-    integer_size = 8
-    block_size = 4
+from rsacore import RSACore
 
+
+class Encryptor:
     @classmethod
     def write_key_files(cls, name, public_key, private_key):
         with open(f"{name}.pub", "wb") as file:
@@ -21,6 +21,6 @@ class Encryptor:
         padding_start = (len(plaintext) // 4) * 4
         padding_length = len(plaintext) % 4
 
-        cipher = [int.to_bytes(pow(int.from_bytes(plaintext[i * cls.block_size:i * cls.block_size + cls.block_size], byteorder="little"), e_key, n), cls.integer_size, byteorder="little") for i in range(len(plaintext) // cls.block_size)]
-        cipher.append(int.to_bytes(pow(int.from_bytes(plaintext[padding_start:padding_start + padding_length], byteorder="little"), e_key, n), cls.integer_size, byteorder="little"))
+        cipher = [int.to_bytes(pow(int.from_bytes(plaintext[i * RSACore.block_size:i * RSACore.block_size + RSACore.block_size], byteorder="little"), e_key, n), RSACore.integer_size, byteorder="little") for i in range(len(plaintext) // RSACore.block_size)]
+        cipher.append(int.to_bytes(pow(int.from_bytes(plaintext[padding_start:padding_start + padding_length], byteorder="little"), e_key, n), RSACore.integer_size, byteorder="little"))
         return cipher

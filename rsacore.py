@@ -3,8 +3,8 @@ from random import randrange
 
 
 class RSACore:
-    def __init__(self):
-        pass
+    integer_size = 8
+    block_size = 4
 
     @classmethod
     def extended_euclidean(cls, a, b):

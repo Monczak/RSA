@@ -1,3 +1,6 @@
+from rsacore import RSACore
+
+
 class FileParser:
     # Returns a byte string with the encrypted data
     @classmethod
@@ -10,7 +13,7 @@ class FileParser:
             orig_length = int.from_bytes(file.read(4), byteorder="little")
 
             encrypted_data = file.read()
-            split_data = [encrypted_data[i * 8:i * 8 + 8] for i in range(0, orig_length)]
+            split_data = [encrypted_data[i * RSACore.integer_size:i * RSACore.integer_size + RSACore.integer_size] for i in range(0, orig_length)]
             return orig_length, split_data
 
     # Returns a tuple with the parsed key (n, d/e)
